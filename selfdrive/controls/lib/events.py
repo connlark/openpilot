@@ -256,8 +256,8 @@ EVENTS: Dict[int, Dict[str, Union[Alert, Callable[[Any, messaging.SubMaster, boo
   },
 
   EventName.startupMaster: {
-    ET.PERMANENT: StartupAlert("WARNING: This branch is not tested",
-                               alert_status=AlertStatus.userPrompt),
+    ET.PERMANENT: StartupAlert("This branch is not tested :)",
+                               alert_status=AlertStatus.normal),
   },
 
   # Car is recognized, but marked as dashcam only
