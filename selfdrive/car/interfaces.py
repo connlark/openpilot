@@ -5,6 +5,7 @@ from typing import Dict, Tuple, List
 
 from cereal import car
 from common.kalman.simple_kalman import KF1D
+from common.params import Params
 from common.realtime import DT_CTRL
 from selfdrive.car import gen_empty_fingerprint
 from selfdrive.config import Conversions as CV
@@ -27,7 +28,6 @@ class CarInterfaceBase(ABC):
   def __init__(self, CP, CarController, CarState):
     self.CP = CP
     self.VM = VehicleModel(CP)
-    self.disengage_on_gas = False
 
     self.frame = 0
     self.steering_unpressed = 0
@@ -44,6 +44,10 @@ class CarInterfaceBase(ABC):
     self.CC = None
     if CarController is not None:
       self.CC = CarController(self.cp.dbc_name, CP, self.VM)
+    
+    # cbl Option to Enable Gas on Cruise
+    params = Params()
+    self.enable_gas_on_cruise = params.get_bool("EnableGasOnCruise")
 
   @staticmethod
   def get_pid_accel_limits(CP, current_speed, cruise_speed):
@@ -73,7 +77,10 @@ class CarInterfaceBase(ABC):
   def get_std_params(candidate, fingerprint):
     ret = car.CarParams.new_message()
     ret.carFingerprint = candidate
-    ret.unsafeMode = 0  # see safety_declarations.h for allowed values
+    ret.unsafeMode = 0  # see panda/board/safety_declarations.h for allowed values
+    params = Params()
+    if params.get_bool("EnableGasOnCruise"):
+      ret.unsafeMode = ret.unsafeMode | 1
 
     # standard ALC params
     ret.steerControlType = car.CarParams.SteerControlType.torque
@@ -126,7 +133,7 @@ class CarInterfaceBase(ABC):
       events.add(EventName.wrongCarMode)
     if cs_out.espDisabled:
       events.add(EventName.espDisabled)
-    if cs_out.gasPressed and self.disengage_on_gas:
+    if cs_out.gasPressed and not self.enable_gas_on_cruise:
       events.add(EventName.gasPressed)
     if cs_out.stockFcw:
       events.add(EventName.stockFcw)
@@ -155,9 +162,7 @@ class CarInterfaceBase(ABC):
       events.add(EventName.steerUnavailable)
 
     # Disable on rising edge of gas or brake. Also disable on brake when speed > 0.
-    # Optionally allow to press gas at zero speed to resume.
-    # e.g. Chrysler does not spam the resume button yet, so resuming with gas is handy. FIXME!
-    if (self.disengage_on_gas and cs_out.gasPressed and (not self.CS.out.gasPressed) and cs_out.vEgo > gas_resume_speed) or \
+    if (not self.enable_gas_on_cruise and cs_out.gasPressed and not self.CS.out.gasPressed) or \
        (cs_out.brakePressed and (not self.CS.out.brakePressed or not cs_out.standstill)):
       events.add(EventName.pedalPressed)
 

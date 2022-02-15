@@ -161,11 +161,7 @@ bool safety_setter_thread(std::vector<Panda *> pandas) {
   int safety_param;
 
   auto safety_configs = car_params.getSafetyConfigs();
- 
- // cbl temp change 
- // uint16_t unsafe_mode = car_params.getUnsafeMode();
- 
- 
+  uint16_t unsafe_mode = car_params.getUnsafeMode();
   for (uint32_t i = 0; i < pandas.size(); i++) {
     auto panda = pandas[i];
 
@@ -178,9 +174,8 @@ bool safety_setter_thread(std::vector<Panda *> pandas) {
       safety_param = 0;
     }
 
-    LOGW("panda %d: setting safety model: %d with param %d", i, (int)safety_model, safety_param);
-
-    panda->set_unsafe_mode(1);  // see safety_declarations.h for allowed values
+    LOGW("panda %d: setting safety model: %d, param: %d, unsafe mode: %d", i, (int)safety_model, safety_param, unsafe_mode);
+    panda->set_unsafe_mode(unsafe_mode);
     panda->set_safety_model(safety_model, safety_param);
   }
 
