@@ -177,7 +177,7 @@ int main(int argc, char **argv) {
 
   // init the models
   ModelState model;
-  model_init(&model, device_id, context, use_extra);
+  model_init(&model, device_id, context);
   LOGW("models loaded, modeld starting");
 
   VisionIpcClient vipc_client_main = VisionIpcClient("camerad", main_wide_camera ? VISION_STREAM_WIDE_ROAD : VISION_STREAM_ROAD, true, device_id, context);
