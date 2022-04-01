@@ -47,7 +47,7 @@ class CarInterfaceBase(ABC):
     
     # cbl Option to Enable Gas on Cruise
     params = Params()
-    self.enable_gas_on_cruise = params.get_bool("EnableGasOnCruise")
+    self.enable_gas_on_cruise = params.get_bool("DisengageOnAccelerator")
 
   @staticmethod
   def get_pid_accel_limits(CP, current_speed, cruise_speed):
@@ -77,10 +77,10 @@ class CarInterfaceBase(ABC):
   def get_std_params(candidate, fingerprint):
     ret = car.CarParams.new_message()
     ret.carFingerprint = candidate
-    ret.unsafeMode = 0  # see panda/board/safety_declarations.h for allowed values
+    ret.alternative_experience = 0  # see panda/board/safety_declarations.h for allowed values
     params = Params()
-    if params.get_bool("EnableGasOnCruise"):
-      ret.unsafeMode = ret.unsafeMode | 1
+    if params.get_bool("DisengageOnAccelerator"):
+      ret.alternative_experience = ret.alternative_experience | 1
 
     # standard ALC params
     ret.steerControlType = car.CarParams.SteerControlType.torque
