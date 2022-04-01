@@ -80,7 +80,7 @@ class CarInterfaceBase(ABC):
     ret.alternative_experience = 0  # see panda/board/safety_declarations.h for allowed values
     params = Params()
     if params.get_bool("DisengageOnAccelerator"):
-      ret.alternative_experience = ret.alternative_experience | 1
+      ret.alternativeExperience = ret.alternativeExperience | 1
 
     # standard ALC params
     ret.steerControlType = car.CarParams.SteerControlType.torque
