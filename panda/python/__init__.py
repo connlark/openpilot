@@ -138,6 +138,10 @@ class Panda(object):
   SAFETY_VOLKSWAGEN_PQ = 21
   SAFETY_SUBARU_LEGACY = 22
   SAFETY_HYUNDAI_LEGACY = 23
+  SAFETY_HYUNDAI_COMMUNITY = 24
+  SAFETY_STELLANTIS = 25
+  SAFETY_FAW = 26
+  SAFETY_BODY = 27
 
   SERIAL_DEBUG = 0
   SERIAL_ESP = 1
@@ -160,7 +164,7 @@ class Panda(object):
   HW_TYPE_RED_PANDA = b'\x07'
 
   CAN_PACKET_VERSION = 2
-  HEALTH_PACKET_VERSION = 3
+  HEALTH_PACKET_VERSION = 4
   HEALTH_STRUCT = struct.Struct("<IIIIIIIIBBBBBBBHBBBHI")
 
   F2_DEVICES = (HW_TYPE_PEDAL, )
@@ -375,7 +379,7 @@ class Panda(object):
       "fault_status": a[16],
       "power_save_enabled": a[17],
       "heartbeat_lost": a[18],
-      "unsafe_mode": a[19],
+      "alternative_experience": a[19],
       "blocked_msg_cnt": a[20],
     }
 
@@ -472,6 +476,9 @@ class Panda(object):
 
   def set_power_save(self, power_save_enabled=0):
     self._handle.controlWrite(Panda.REQUEST_OUT, 0xe7, int(power_save_enabled), 0, b'')
+
+  def enable_deepsleep(self):
+    self._handle.controlWrite(Panda.REQUEST_OUT, 0xfb, 0, 0, b'')
 
   def set_esp_power(self, on):
     self._handle.controlWrite(Panda.REQUEST_OUT, 0xd9, int(on), 0, b'')
