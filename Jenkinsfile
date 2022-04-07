@@ -29,10 +29,8 @@ pipeline {
             '''
           }
         }
-    }
-    
-    
-    
+      }
+    } 
   }
   environment {
     LANG = 'en_US.UTF-8'
