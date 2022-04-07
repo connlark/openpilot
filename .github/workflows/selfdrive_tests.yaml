@@ -220,6 +220,8 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 50
     steps:
+    - name: enable processes
+      run: sh ./__SCRIPTS__/enable_logging.sh
     - name: Get current date
       id: date
       run: echo "::set-output name=time::$(date +'%s')"
