@@ -64,7 +64,7 @@ void Sidebar::updateState(const UIState &s) {
   setProperty("connectStatus", QVariant::fromValue(connectStatus));
 
   //cbl
-  QString ambientTemp =  QString("%1°C").arg((int)deviceState.getAmbientTempC());
+  QString ambientTemp =  QString("%1°C\n").arg((int)deviceState.getAmbientTempC());
 
   ItemStatus tempStatus = {ambientTemp, danger_color};
   auto ts = deviceState.getThermalStatus();
