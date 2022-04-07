@@ -287,9 +287,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
     ET.PERMANENT: StartupAlert("Be ready to take over at any time")
   },
 
-  EventName.startupMaster: {
-    ET.PERMANENT: startup_master_alert,
-  },
+  EventName.startupMaster: {},
 
   # Car is recognized, but marked as dashcam only
   EventName.startupNoControl: {
