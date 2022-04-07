@@ -56,6 +56,14 @@ echo "#define COMMA_VERSION \"$VERSION-$GIT_HASH-$DATETIME\"" > selfdrive/common
 cd $TARGET_DIR
 rm -f panda/board/obj/panda.bin.signed
 
+git rm --cached -f cereal;
+git rm --cached -f opendbc;
+git rm --cached -f panda;
+
+git add cereal;
+git add opendbc;
+git add panda;
+
 echo "[-] committing version $VERSION T=$SECONDS"
 git add -f .
 git status
