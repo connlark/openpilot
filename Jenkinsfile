@@ -12,7 +12,7 @@ pipeline {
             branch 'master'
           }
           steps {
-            sh '''env;
+            sh '''env;pwd;
             
             '''
           }
