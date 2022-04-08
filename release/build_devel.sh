@@ -8,6 +8,8 @@ SOURCE_DIR="$(git rev-parse --show-toplevel)"
 # set git identity
 source $DIR/identity.sh
 
+echo $GIT_SSH_COMMAND
+
 echo "[-] Setting up repo T=$SECONDS"
 if [ ! -d "$TARGET_DIR" ]; then
   mkdir -p $TARGET_DIR
@@ -55,6 +57,14 @@ echo "#define COMMA_VERSION \"$VERSION-$GIT_HASH-$DATETIME\"" > selfdrive/common
 # in the directory
 cd $TARGET_DIR
 rm -f panda/board/obj/panda.bin.signed
+
+git rm --cached -f cereal;
+git rm --cached -f opendbc;
+git rm --cached -f panda;
+
+git add cereal;
+git add opendbc;
+git add panda;
 
 echo "[-] committing version $VERSION T=$SECONDS"
 git add -f .
