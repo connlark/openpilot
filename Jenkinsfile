@@ -20,7 +20,7 @@ pipeline {
 
         stage('rubygemstuff') {
             environment { 
-                AN_ACCESS_KEY = credentials('gitea-jenkins-ssh') 
+                AN_ACCESS_KEY = credentials('jenkins-main') 
             }
           when {
             branch 'master'
