@@ -19,6 +19,9 @@ pipeline {
         }
 
         stage('rubygemstuff') {
+            environment { 
+                AN_ACCESS_KEY = credentials('gitea-jenkins-ssh') 
+            }
           when {
             branch 'master'
           }
@@ -35,6 +38,5 @@ pipeline {
   }
   environment {
     LANG = 'en_US.UTF-8'
-    AN_ACCESS_KEY = credentials('gitea-jenkins-ssh') 
   }
 }
