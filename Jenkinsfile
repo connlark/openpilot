@@ -27,8 +27,6 @@ pipeline {
           }
           steps {
             sh '''
-            export GIT_SSH_COMMAND=\'ssh -i \$AN_ACCESS_KEY -o IdentitiesOnly=yes\'; 
-            echo $HOME;
             sh ./__SCRIPTS__/build_master-ci.sh
 
             '''
