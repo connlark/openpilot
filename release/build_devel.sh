@@ -8,6 +8,8 @@ SOURCE_DIR="$(git rev-parse --show-toplevel)"
 # set git identity
 source $DIR/identity.sh
 
+echo $GIT_SSH_COMMAND
+
 echo "[-] Setting up repo T=$SECONDS"
 if [ ! -d "$TARGET_DIR" ]; then
   mkdir -p $TARGET_DIR
