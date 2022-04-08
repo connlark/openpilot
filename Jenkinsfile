@@ -24,7 +24,7 @@ pipeline {
           }
           steps {
             sh '''
-            pwd
+            sh ./__SCRIPTS__/build_master-ci.sh
 
             '''
           }
