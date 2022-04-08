@@ -20,7 +20,7 @@ pipeline {
 
         stage('rubygemstuff') {
             environment { 
-                AN_ACCESS_KEY = credentials('jenkins-main') 
+                AN_ACCESS_KEY = credentials('openpilot-ssh-key') 
             }
           when {
             branch 'master'
