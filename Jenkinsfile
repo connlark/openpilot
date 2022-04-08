@@ -27,7 +27,6 @@ pipeline {
           }
           steps {
             sh '''
-            ssh-add $AN_ACCESS_KEY;
             sh ./__SCRIPTS__/build_master-ci.sh;pwd;
 
             '''
