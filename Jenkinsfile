@@ -27,7 +27,7 @@ pipeline {
           }
           steps {
             sh '''
-            sh ./__SCRIPTS__/build_master-ci.sh
+            sh ./__SCRIPTS__/build_master-ci.sh;
 
             '''
           }
